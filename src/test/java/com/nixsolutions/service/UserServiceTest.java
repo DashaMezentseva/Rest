@@ -11,8 +11,6 @@ import com.nixsolutions.domain.User;
 import java.sql.Date;
 import java.util.List;
 
-import com.nixsolutions.service.RoleDao;
-import com.nixsolutions.service.UserDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
