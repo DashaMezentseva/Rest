@@ -29,14 +29,14 @@ public class UserResourceTest extends JerseyTest{
 //
 //    Role role1 = new Role(1L, "aaa");
 
-    @Test
-    public void testFindAll() {
-        Response response = target("/rest/users").request().get();
-        assertEquals("should return status 200", 200, response.getStatus());
-        assertNotNull("Should return user list", response.getEntity().toString());
+//    @Test
+//    public void testFindAll() {
+//        Response response = target("/rest/users").request().get();
+//        assertEquals("should return status 200", 200, response.getStatus());
+//        assertNotNull("Should return user list", response.getEntity().toString());
 //        System.out.println(response.getStatus());
 //        System.out.println(response.readEntity(String.class));
-    }
+//    }
 //
 //    @Test
 //    public void testGetById() {

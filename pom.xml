@@ -299,13 +299,54 @@
             <artifactId>jersey-media-moxy</artifactId>
             <version>2.29.1</version>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.glassfish.jersey.test-framework.providers</groupId>-->
+        <!--            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>-->
+        <!--            <version>2.29.1</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.cxf</groupId>-->
+<!--            <artifactId>cxf-bundle-jaxrs</artifactId>-->
+<!--            <version>2.7.18</version>-->
+<!--        </dependency>-->
+
         <dependency>
-            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-            <version>2.29.1</version>
-            <scope>test</scope>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>3.3.4</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.apache.cxf</groupId>-->
+<!--            <artifactId>cxf-rt-rs-extension-providers</artifactId>-->
+<!--            <version>2.7.18</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.cxf</groupId>-->
+<!--            <artifactId>cxf-rt-rs-extension-search</artifactId>-->
+<!--            <version>2.7.18</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.cxf</groupId>-->
+<!--            <artifactId>cxf-rt-databinding-aegis</artifactId>-->
+<!--            <version>2.7.18</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
     </dependencies>
 

@@ -3,7 +3,11 @@ package com.nixsolutions.soap;
 import com.nixsolutions.domain.User;
 import java.util.List;
 import javax.jws.WebMethod;
+import javax.jws.WebService;
+import org.springframework.stereotype.Component;
 
+@WebService
+@Component
 public interface SoapService {
 
     @WebMethod
