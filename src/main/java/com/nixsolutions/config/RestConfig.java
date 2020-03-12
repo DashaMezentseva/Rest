@@ -1,7 +1,6 @@
 package com.nixsolutions.config;
 
-import com.nixsolutions.resource.LoginResource;
-import com.nixsolutions.resource.UserResource;
+import com.nixsolutions.rest.UserResource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +12,7 @@ public class RestConfig extends Application {
     public Set<Class<?>> getClasses() {
         return new HashSet<Class<?>>(
             Arrays.asList(
-                UserResource.class,
-                LoginResource.class));
+                UserResource.class));
 //                AdminRestController.class,
 //                UserRestController.class));
     }

@@ -21,6 +21,7 @@ public class AppInitializer
 
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 
+
         servletContext.addListener(new ContextLoaderListener(context));
         servletContext.setInitParameter(
             "contextConfigLocation", "com.nixsolutions");

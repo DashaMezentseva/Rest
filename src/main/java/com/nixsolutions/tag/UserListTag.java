@@ -4,6 +4,7 @@ package com.nixsolutions.tag;
 import com.nixsolutions.domain.User;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.servlet.jsp.JspException;
@@ -84,7 +85,9 @@ public class UserListTag implements Tag {
                 stringBuilder.append(user.getLastName());
                 stringBuilder.append("</td>");
                 stringBuilder.append("<td>");
-                stringBuilder.append(ChronoUnit.YEARS.between(user.getBirthday().toLocalDate(), LocalDate.now()));
+                stringBuilder.append(ChronoUnit.YEARS.between(user.getBirthday().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate(), LocalDate.now()));
                 stringBuilder.append("</td>");
                 stringBuilder.append("<td>");
                 stringBuilder.append(user.getRole().getRoleId() == 2 ? "Admin" : "User");
