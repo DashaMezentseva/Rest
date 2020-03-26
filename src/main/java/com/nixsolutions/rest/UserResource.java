@@ -3,6 +3,7 @@ package com.nixsolutions.rest;
 import com.nixsolutions.domain.User;
 import com.nixsolutions.dto.UserDto;
 import com.nixsolutions.service.UserDao;
+
 import java.util.List;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -15,27 +16,119 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import static com.nixsolutions.dto.UserDto.dtoToUser;
+import static com.nixsolutions.dto.UserDto.userToDto;
 
+@CrossOrigin(origins = "http://192.168.0.107:4200", allowedHeaders = "*")
 @RestController
-@Path("/users")
+@Path("/")
 public class UserResource {
+    final Logger log = LoggerFactory.getLogger(UserResource.class);
+
     @Autowired
     private UserDao userService;
 
     @GET
+    @Path("/users")
+    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> findAllUsers() {
+        log.trace("in findAllUsers");
         return userService.findAll();
     }
 
     @GET
-    @Path("/{userId}")
+    @Path("/users/{userId}")
+    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces(MediaType.APPLICATION_JSON)
     public User findUserById(@PathParam("userId") Long userId) {
+        log.trace("in findAllUsers, userId = " + userId);
         return userService.findById(userId);
+    }
+
+    @GET
+    @Path("/usersDto/{userId}")
+    @CrossOrigin(origins = "http://192.168.0.107:4200")
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserDto findUserDtoById(@PathParam("userId") Long userId) {
+        log.trace("in findAllUsers, userId = " + userId);
+        User user = userService.findById(userId);
+        UserDto userDto = userToDto(user);
+        return userDto;
+    }
+
+    @POST
+    @Path("/users")
+    @CrossOrigin(origins = "http://192.168.0.107:4200")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response postUser(UserDto user) {
+        log.trace("in postUser");
+        if (!isUniqueLogin(user)) {
+            return Response.status(Response.Status.CONFLICT).entity("Login is not unique ").build();
+        } else if (!isUniqueEmail(user)) {
+            return Response.status(Response.Status.CONFLICT).entity("Email is not unique ").build();
+        } else {
+            userService.create(dtoToUser(user));
+        }
+        return Response.ok().build();
+    }
+
+
+    @Path("/users/{userId}")
+    @CrossOrigin(origins = "http://192.168.0.107:4200")
+    @Produces(MediaType.APPLICATION_JSON)
+    @PUT
+    public Response putUser(@PathParam("userId") Long userId, @PathParam("email") String email, @RequestBody UserDto user) {
+        log.trace("in putUser, userId = " + userId + " email = " + email);
+        if (userService.findById(userId) != null) {
+
+            if (!isUniqueEmail(user)) {
+                return Response.status(Response.Status.CONFLICT).entity("Email is not unique " + email).build();
+            } else {
+                user.setUserId(userId);
+                userService.create(dtoToUser(user));
+            }
+        }
+        return Response.ok().build();
+    }
+
+    @Path("/users/{userId}")
+    @CrossOrigin(origins = "http://192.168.0.107:4200")
+    @Produces({MediaType.APPLICATION_JSON})
+    @DELETE
+    public void deleteUser(@PathParam("userId") Long userId) {
+        log.trace("in deleteUser, userId = " + userId);
+        User user = userService.findById(userId);
+        if (user == null) {
+            throw new RuntimeException();
+        }
+        userService.remove(user);
+    }
+
+    protected boolean isUniqueEmail(UserDto userDto) {
+        for (User user : userService.findAll()) {
+            if (user.getEmail().equals(userDto.getEmail())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected boolean isUniqueLogin(UserDto userDto) {
+        for (User user : userService.findAll()) {
+            if (user.getLogin().equals(userDto.getLogin())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 //    @POST
@@ -85,39 +178,14 @@ public class UserResource {
 //        return Response.noContent().build();
 //    }
 
-    @POST
-    @Produces({MediaType.APPLICATION_JSON})
-    public void postUser(User user) {
-        userService.create(user);
-    }
 
-    @PUT
-    @Path("/{userId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public void putUser(@PathParam("userId") Long userId, User user) {
-        if (userService.findById(userId) != null) {
-            userService.update(user);
-        }
-    }
-
-    @DELETE
-    @Path("/{userId}")
-    public Response deleteUser(@PathParam("userId") Long userId) {
-        User user = userService.findById(userId);
-        if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        userService.remove(user);
-        return Response.status(202).entity("User was deleted successfully").build();
-    }
-
-    protected boolean isUniqueLogin(UserDto userDto) {
-        for (User user : userService.findAll()) {
-            if (user.getLogin().equals(userDto.getLogin())) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    protected boolean isUniqueLogin(UserDto userDto) {
+//        for (User user : userService.findAll()) {
+//            if (user.getLogin().equals(userDto.getLogin())) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
 }

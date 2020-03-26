@@ -30,9 +30,9 @@ public class AppInitializer
 //        dispatcher.setLoadOnStartup(1);
 //        dispatcher.addMapping("/");
 //
-        ServletRegistration.Dynamic cxfServlet = servletContext
-            .addServlet("cxf", new CXFServlet());
-        cxfServlet.setLoadOnStartup(2);
-        cxfServlet.addMapping("/soap/*");
+//        ServletRegistration.Dynamic cxfServlet = servletContext
+//            .addServlet("cxf", new CXFServlet());
+//        cxfServlet.setLoadOnStartup(2);
+//        cxfServlet.addMapping("/soap/*");
     }
 }

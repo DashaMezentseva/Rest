@@ -1,5 +1,8 @@
 package com.nixsolutions.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class RegistrationUserDto extends UserDto {
     private String captcha;
 
@@ -17,4 +20,8 @@ public class RegistrationUserDto extends UserDto {
                 "captcha='" + captcha + '\'' +
                 '}';
     }
+
+    public RegistrationUserDto() {
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.nixsolutions.service;
 
 import com.nixsolutions.domain.User;
+import com.nixsolutions.dto.UserDto;
+
 import java.util.List;
 
 public interface UserDao {
@@ -17,4 +19,5 @@ public interface UserDao {
     User findByEmail(String email);
 
     User findById(Long id);
+
 }
