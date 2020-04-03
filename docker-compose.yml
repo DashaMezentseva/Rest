@@ -1,6 +1,6 @@
 version: '3'
 services:
   restapi:
-    image: Rest/java-restfull-api
+    image: rest/java-restfull-api
     ports:
       - "80:8888"
