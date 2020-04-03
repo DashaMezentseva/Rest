@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 import static com.nixsolutions.dto.UserDto.dtoToUser;
 import static com.nixsolutions.dto.UserDto.userToDto;
 
-@CrossOrigin(origins = "http://192.168.0.107:4200", allowedHeaders = "*")
+@CrossOrigin
 @RestController
 @Path("/")
 public class LoginResource {
