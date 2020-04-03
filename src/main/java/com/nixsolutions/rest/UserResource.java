@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.nixsolutions.dto.UserDto.dtoToUser;
 import static com.nixsolutions.dto.UserDto.userToDto;
 
-@CrossOrigin(origins = "http://192.168.0.107:4200", allowedHeaders = "*")
+@CrossOrigin
 @RestController
 @Path("/")
 public class UserResource {
@@ -38,7 +38,6 @@ public class UserResource {
 
     @GET
     @Path("/users")
-    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> findAllUsers() {
         log.trace("in findAllUsers");
@@ -47,7 +46,6 @@ public class UserResource {
 
     @GET
     @Path("/users/{userId}")
-    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces(MediaType.APPLICATION_JSON)
     public User findUserById(@PathParam("userId") Long userId) {
         log.trace("in findAllUsers, userId = " + userId);
@@ -56,7 +54,6 @@ public class UserResource {
 
     @GET
     @Path("/usersDto/{userId}")
-    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces(MediaType.APPLICATION_JSON)
     public UserDto findUserDtoById(@PathParam("userId") Long userId) {
         log.trace("in findAllUsers, userId = " + userId);
@@ -67,7 +64,6 @@ public class UserResource {
 
     @POST
     @Path("/users")
-    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces({MediaType.APPLICATION_JSON})
     public Response postUser(UserDto user) {
         log.trace("in postUser");
@@ -83,7 +79,6 @@ public class UserResource {
 
 
     @Path("/users/{userId}")
-    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces(MediaType.APPLICATION_JSON)
     @PUT
     public Response putUser(@PathParam("userId") Long userId, @PathParam("email") String email, @RequestBody UserDto user) {
@@ -101,7 +96,6 @@ public class UserResource {
     }
 
     @Path("/users/{userId}")
-    @CrossOrigin(origins = "http://192.168.0.107:4200")
     @Produces({MediaType.APPLICATION_JSON})
     @DELETE
     public void deleteUser(@PathParam("userId") Long userId) {
@@ -130,62 +124,4 @@ public class UserResource {
         }
         return true;
     }
-
-//    @POST
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response addUser(@Valid UserDto userDto, @PathParam("passwordAgain") String passwordAgain) {
-//        if (!isUniqueLogin(userDto)) {
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//
-//        if (userDto.getPassword().isEmpty()) {
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//
-//        if (passwordAgain.isEmpty()) {
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//
-//        if (!passwordAgain.equals(userDto.getPassword())) {
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//
-//        User user = UserDto.dtoToUser(userDto);
-//        userService.create(user);
-//        return Response.status(Response.Status.CREATED).build();
-//    }
-//
-//
-//    @PUT
-//    @Path("/{userId}")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response updateUser(@PathParam("userId") Long userId, @Valid UserDto userDto,
-//                               @PathParam("password") String password,
-//                               @PathParam("passwordAgain") String passwordAgain) {
-//
-//        User user = userService.findByLogin(userDto.getLogin());
-//        user.setUserId(userId);
-//        if (password.isEmpty() && passwordAgain.isEmpty()) {
-//            userDto.setPassword(user.getPassword());
-//            passwordAgain = user.getPassword();
-//        } else if (!passwordAgain.equals(password)) {
-//            return Response.status(Response.Status.CONFLICT).build();
-//        }
-//        User user1 = UserDto.dtoToUser(userDto);
-//        userService.update(user1);
-//
-//        return Response.noContent().build();
-//    }
-
-
-//    protected boolean isUniqueLogin(UserDto userDto) {
-//        for (User user : userService.findAll()) {
-//            if (user.getLogin().equals(userDto.getLogin())) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
 }
