@@ -32,7 +32,7 @@ public class DbConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(environment.getProperty("db.domain.package"));
+        em.setPackagesToScan(environment.getProperty("jdbc.domain.package"));
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(hibernateProperties());
         return em;
@@ -48,10 +48,10 @@ public class DbConfig {
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl(environment.getRequiredProperty("db.url"));
-        dataSource.setDriverClassName(environment.getRequiredProperty("db.driverClassName"));
-        dataSource.setUsername(environment.getRequiredProperty("db.username"));
-        dataSource.setPassword(environment.getRequiredProperty("db.password"));
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
         return dataSource;
     }
 
@@ -65,33 +65,6 @@ public class DbConfig {
             throw new IllegalArgumentException("Cannot find hibernate.properties in classpath", ex);
         }
     }
-
-    //    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setPackagesToScan("com.nixsolutions.domain");
-//        sessionFactory.setHibernateProperties(hibernateProperties());
-//        return sessionFactory;
-//    }
-
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-//        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-//        return dataSource;
-//    }
-
-//    @Bean
-//    @Autowired
-//    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-//        HibernateTransactionManager txManager = new HibernateTransactionManager();
-//        txManager.setSessionFactory(sessionFactory);
-//        return txManager;
-//    }
 }
 
 
